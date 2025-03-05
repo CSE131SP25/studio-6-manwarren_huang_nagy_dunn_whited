@@ -14,7 +14,11 @@ public class RecursiveMethods {
 	public static double geometricSum(int n) {
 		
 			// FIXME compute the geometric sum for the first n terms recursively
-			return 0;
+			double sum = 0.0;
+			for (int power = 1; power <= n; ++power) {
+				sum = sum + Math.pow(0.5, power);
+			}
+			return sum;
 		
 	}
 
@@ -31,6 +35,29 @@ public class RecursiveMethods {
 	public static void circlesUponCircles(double xCenter, double yCenter, double radius, double radiusMinimumDrawingThreshold) {
 		
 		// FIXME complete the recursive drawing
+		int N = 1;
+		double currentRadius = radius;
+		while (currentRadius >= radiusMinimumDrawingThreshold) {
+			for (int i = 1; i <= Math.pow(4,  N); i++) {
+				double X = xCenter;
+				double Y = yCenter;
+				for (int j = 0; j < N; j++) {
+					if (i % Math.pow(4,  N - 1) == 0) {
+						Y = Y + currentRadius;
+					} else if (i % Math.pow(4,  N - 1) == 1) {
+						X = X + currentRadius;
+					} else if (i % Math.pow(4,  N - 1) == 2) {
+						Y = Y - currentRadius;
+					} else if (i % Math.pow(4,  N - 1) == 3) {
+						X = X - currentRadius;
+					}
+				}
+				StdDraw.ellipse(X, Y, currentRadius, currentRadius);
+			}
+			N++;
+			currentRadius = currentRadius * 1.0 / 3.0;
+		}
+		
 	}
 	
 
@@ -43,7 +70,19 @@ public class RecursiveMethods {
 	public static int[] toReversed(int[] array) {
 		
 			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
+			int[] reversed = new int[array.length];
+			if (array.length > 0) {
+				int lastIndex = array.length - 1;
+				for (int index = 0; index <= array.length / 2; ++index) {
+					int mirrorIndex = lastIndex - index;
+					// note:
+					// since we read from array and write to reversed
+					// we do not need to use a temp variable
+					reversed[index] = array[mirrorIndex];
+					reversed[mirrorIndex] = array[index];
+				}
+			}
+			return reversed;
 		
 	}
 
@@ -58,7 +97,12 @@ public class RecursiveMethods {
 	public static int gcd(int p, int q) {
 		
 			// FIXME compute the gcd of p and q using recursion
-			return 0;
+			while (q != 0) {
+				int temp = q;
+				q = p % q;
+				p = temp;
+			}
+			return p;
 		
 	}
 
